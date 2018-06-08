@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <style>
+    body, html {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    canvas {
+      outline: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+ <canvas id="canvas"></canvas>
+  <script>
+    (function() {
+      var canvas = document.getElementById('canvas'),
+      ctx = canvas.getContext('2d');
+
+      // resize the canvas to fill browser window dynamically
+      window.addEventListener('resize', resizeCanvas, false);
+
+      function resizeCanvas() {
+              canvas.width = document.documentElement.clientWidth;
+              canvas.height = document.documentElement.clientHeight -3;
+
+              /**
+               * Your drawings need to be inside this function otherwise they will be reset when 
+               * you resize the browser window and the canvas goes will be cleared.
+               */
+              drawStuff(); 
+      }
+      resizeCanvas();
+
+      function drawStuff() {
+              // do your drawing stuff here
+        ctx.fillStyle = 'rgba(230, 50, 50, 0.9)';
+        ctx.fillRect(0, 0, 300, 150);
+        
+        
+        var gradient = ctx.createLinearGradient(350, 0, 600, 0);
+        gradient.addColorStop(0, 'green');
+        gradient.addColorStop(1, 'yellow');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(350, 0, 300, 150);
+        
+        //маска
+        ctx.beginPath();
+        ctx.rect(360, 170, 300, 150);
+        ctx.rect(460, 220, 70, 70);
+        ctx.closePath();
+        ctx.fill('evenodd');
+      }
+    })();
+  </script>
+</body>
+</html>
