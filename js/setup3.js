@@ -12,7 +12,6 @@ var wizards = {
   eyesColors: ['black', 'red', 'blue', 'yellow', 'green']
 };
 
-
 var fragment = document.createDocumentFragment();
 
 for (var i = 0; i < 4; i++) {
