@@ -636,15 +636,21 @@ input[type=radio]:checked + .review-mark-label {
 
 .setup-close {
   float: right;
+  padding: 0;
+  margin: 0;
 
   top: 20px;
   right: 20px;
 
   font-size: 70px;
+  font-weight: normal;
+  line-height: normal;
   color: #000;
+  background-color: transparent;
   cursor: pointer;
 
   transform: translateY(-0.3em);
+
 }
 
 .setup-artifacts-shop {
