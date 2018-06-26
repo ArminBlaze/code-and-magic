@@ -81,7 +81,7 @@ function closePopup (e) {
 };
 
 function onPopupEscPress (e) {
-  if( e.target.classList.contains('setup-user-name') ) return;
+  if( e.target.classList.contains('setup-user-name') ) return; //клик на активном инпуте игнорируем
   if(e.keyCode === ESC_KEYCODE) {
     closePopup();
   }
