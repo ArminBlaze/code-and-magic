@@ -573,6 +573,10 @@ input[type=radio]:checked + .review-mark-label {
   z-index: 3;
 }
 
+.setup-open {
+	display: block;
+}
+
 .setup-open-icon {
   position: absolute;
   top: 100px;
