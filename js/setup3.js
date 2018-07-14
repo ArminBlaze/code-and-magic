@@ -3,49 +3,85 @@
 
 (function () { 
 	var setup = document.querySelector('.setup');
-	var wizards = window.util.wizards;
-
-	var similarList = document.querySelector('.setup-similar-list');
-	var wizardsTemplate = document.querySelector('#similar-wizard-template').content;
-
-	var fragment = document.createDocumentFragment();
-
-	for (var i = 0; i < 4; i++) {
-		var wizard = wizardsTemplate.cloneNode(true);
-		fragment.appendChild(createWizardElem(wizard));
+	var wizards;
+	var WIZARDS_NUMBER = 4;
+	
+	function onError (message) {
+		console.error(message);
 	}
+	
+	function onLoad (data) {
+		console.log(data);
+		
+		//из data выбрать 4 волшебников и полученный массив записать в wizards
+		wizards = pickRandomAndUniqueFromArr(data, WIZARDS_NUMBER);
+		console.log(wizards);
+		
+		
+		var similarList = document.querySelector('.setup-similar-list');
+		var wizardsTemplate = document.querySelector('#similar-wizard-template').content;
 
-	similarList.appendChild(fragment);
+		var fragment = document.createDocumentFragment();
 
-	document.querySelector('.setup-similar').classList.remove('hidden');
+		for (var i = 0; i < wizards.length; i++) {
+			var wizard = wizardsTemplate.cloneNode(true);
+			fragment.appendChild(createWizardElem(wizard, wizards[i]));
+		}
+		
 
-	function createWizardElem(elem) {
+		similarList.appendChild(fragment);
+
+		document.querySelector('.setup-similar').classList.remove('hidden');
+	}
+	
+	window.backend.load(onLoad, onError);
+
+	function pickRandomAndUniqueFromArr (arr, num) {
+		var newArr = [];
+		
+		if(num >= arr.length) num = arr.length;
+		
+		for (var i = 0; i < num; i++) {
+			while(arr.length - newArr.length > 0) {
+				var item = window.util.pickRandomFromArr(arr);
+				if(!~newArr.indexOf(item)) {
+					newArr.push(item);
+					break;
+				}
+			}
+		}
+		
+		return newArr;
+	}
+	
+	//////////////////////////////////////
+
+	function createWizardElem(elem, wizardParams) {
 		var name = elem.querySelector('.setup-similar-label');
 		var wizardCoat = elem.querySelector('.wizard-coat');
 		var wizardEyes = elem.querySelector('.wizard-eyes');
 
-		var wizardParams = generateRandomParams();
+		console.log(wizardParams);
 
-		name.textContent = wizardParams.names + ' ' + wizardParams.surnames;
-		wizardCoat.style.fill = wizardParams.coatColors;
-		wizardEyes.style.fill = wizardParams.eyesColors;
+		name.textContent = wizardParams.name;
+		wizardCoat.style.fill = wizardParams.colorCoat;
+		wizardEyes.style.fill = wizardParams.colorEyes;
 
 		return elem;
 	}
 
-	function generateRandomParams() {
-		var wizardParams = {};
-		
-
-		for (var prop in wizards) {
-			if (wizards.hasOwnProperty(prop)) {
-	//      var item = wizards[prop][Math.floor(Math.random() * wizards[prop].length)];
-				var item = window.util.pickRandomFromArr( wizards[prop] );
-				wizardParams[prop] = item;
-			}
-		}
-		return wizardParams;
-	}
+//	function generateRandomParams() {
+//		var wizardParams = {};
+//
+//		for (var prop in wizards) {
+//			if (wizards.hasOwnProperty(prop)) {
+//	//      var item = wizards[prop][Math.floor(Math.random() * wizards[prop].length)];
+//				var item = window.util.pickRandomFromArr( wizards[prop] );
+//				wizardParams[prop] = item;
+//			}
+//		}
+//		return wizardParams;
+//	}
 	
 	
 	//////////////////
