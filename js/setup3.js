@@ -27,7 +27,6 @@
 			var wizard = wizardsTemplate.cloneNode(true);
 			fragment.appendChild(createWizardElem(wizard, wizards[i]));
 		}
-		
 
 		similarList.appendChild(fragment);
 
@@ -61,28 +60,12 @@
 		var wizardCoat = elem.querySelector('.wizard-coat');
 		var wizardEyes = elem.querySelector('.wizard-eyes');
 
-		console.log(wizardParams);
-
 		name.textContent = wizardParams.name;
 		wizardCoat.style.fill = wizardParams.colorCoat;
 		wizardEyes.style.fill = wizardParams.colorEyes;
 
 		return elem;
 	}
-
-//	function generateRandomParams() {
-//		var wizardParams = {};
-//
-//		for (var prop in wizards) {
-//			if (wizards.hasOwnProperty(prop)) {
-//	//      var item = wizards[prop][Math.floor(Math.random() * wizards[prop].length)];
-//				var item = window.util.pickRandomFromArr( wizards[prop] );
-//				wizardParams[prop] = item;
-//			}
-//		}
-//		return wizardParams;
-//	}
-	
 	
 	//////////////////
 //	05 - draggable items
