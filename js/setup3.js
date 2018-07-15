@@ -6,9 +6,9 @@
 	var wizards;
 	var WIZARDS_NUMBER = 4;
 	
-	function onError (message) {
-		console.error(message);
-	}
+	window.backend.load(onLoad, window.util.onError);
+	
+	
 	
 	function onLoad (data) {
 		console.log(data);
@@ -32,8 +32,6 @@
 
 		document.querySelector('.setup-similar').classList.remove('hidden');
 	}
-	
-	window.backend.load(onLoad, onError);
 
 	function pickRandomAndUniqueFromArr (arr, num) {
 		var newArr = [];

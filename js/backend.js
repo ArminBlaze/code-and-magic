@@ -9,7 +9,8 @@
 	
 //	var CALLBACK_NAME = '__jsonpCallback';
 //	var DATA_URL = 'https://1510.dump.academy/code-and-magick/data';
-	var DATA_URL = 'https://js.dump.academy/code-and-magick/data';
+	var LOAD_URL = 'https://js.dump.academy/code-and-magick/data';
+	var SAVE_URL = 'https://js.dump.academy/code-and-magick';
 	
 	function load (onLoad, onError) { //XHR ver
 		var xhr = new XMLHttpRequest();
@@ -18,8 +19,8 @@
 			if(xhr.status === 200) {
 				try	{
 					var data = JSON.parse(xhr.response);
-//					console.log(data);
 					onLoad(data);
+//					console.log(data);
 				} 
 				catch(err) {
 //					console.log(err.message);
@@ -40,7 +41,7 @@
 		});
 		
 		xhr.timeout = 10000;
-		xhr.open('GET', DATA_URL);
+		xhr.open('GET', LOAD_URL);
 		xhr.send();
 	}
 	
@@ -49,7 +50,17 @@
 //скрывать форму редактирования персонажа, если ошибок не
 //произошло
 	function save (data, onLoad, onError) {
+		var xhr = new XMLHttpRequest();
+		xhr.responseType = 'json';
 		
+		xhr.addEventListener('load', function() {
+			if(xhr.status === 200) {
+				onLoad(xhr.response);
+			}
+		});
+		
+		xhr.open('POST', SAVE_URL);
+		xhr.send(data);
 	}
 	
 	window.backend = {

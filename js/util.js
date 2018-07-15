@@ -13,6 +13,9 @@
 		//ф-ция выбора случайного значения из массива. Принимает массив в качестве параметра
 		pickRandomFromArr: function(arr) {
 			return arr[Math.floor(Math.random() * arr.length)];
+		},
+		onError: function(message) {
+			console.error(message);
 		}
 	};
 
