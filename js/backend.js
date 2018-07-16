@@ -12,7 +12,13 @@
 	var LOAD_URL = 'https://js.dump.academy/code-and-magick/data';
 	var SAVE_URL = 'https://js.dump.academy/code-and-magick';
 	
-	function load (onLoad, onError) { //XHR ver
+	function request (options) {
+		var data = options.data || null;
+		var url = options.url;
+		var method = options.method;
+		var onLoad = options.onLoad;
+		var onError = options.onError;
+		
 		var xhr = new XMLHttpRequest();
 		
 		xhr.addEventListener('load', function() {
@@ -28,7 +34,7 @@
 				}
 			} 
 			else {
-				onError('Неизвестный статус: ' + xhr.status + ' ' + xhr.statusText);
+				onError('Ошибка сервера: ' + xhr.status + ' ' + xhr.statusText);
 			}
 		});
 		
@@ -41,27 +47,30 @@
 		});
 		
 		xhr.timeout = 10000;
-		xhr.open('GET', LOAD_URL);
-		xhr.send();
-	}
-	
-	
-//отправлять данные игрока на сервер, обрабатывать ошибки и
-//скрывать форму редактирования персонажа, если ошибок не
-//произошло
-	function save (data, onLoad, onError) {
-		var xhr = new XMLHttpRequest();
-		xhr.responseType = 'json';
-		
-		xhr.addEventListener('load', function() {
-			if(xhr.status === 200) {
-				onLoad(xhr.response);
-			}
-		});
-		
-		xhr.open('POST', SAVE_URL);
+		xhr.open(method, url);
 		xhr.send(data);
+	};
+	
+	
+	function load (onLoad, onError) {
+		request({
+				url: LOAD_URL,
+				method: 'GET',
+				onLoad: onLoad,
+				onError: onError
+			});
+	};
+	
+	function save (data, onLoad, onError) {
+		request({
+			url: SAVE_URL,
+			method: 'POST',
+			onLoad: onLoad,
+			onError: onError,
+			data: data
+		});
 	}
+	
 	
 	window.backend = {
 		load: load,
