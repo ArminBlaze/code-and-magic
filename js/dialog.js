@@ -64,6 +64,25 @@
 		}
 	}
 	
+	//06 - Form AJAX send
+	var form = document.querySelector('.setup-wizard-form');
+	
+	form.addEventListener('submit', onFormSubmit);
+	
+	function onFormSubmit (e) {
+		e.preventDefault();
+		
+		var data = new FormData(form);
+		
+		window.backend.save(data, onLoad, window.util.onError);
+		
+		function onLoad (response) {
+			console.log(response);
+			closePopup();
+		}
+	}
+	
+	
 	//05 - D'n'd
 	var popupIcon = setup.querySelector('.setup-user-pic');
 	
