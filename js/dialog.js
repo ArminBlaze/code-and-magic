@@ -78,7 +78,6 @@
 		
 		function onLoad (response) {
 			console.log(response);
-			console.log(typeof response);
 			closePopup();
 		}
 	}
