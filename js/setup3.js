@@ -4,33 +4,43 @@
 (function () { 
 	var setup = document.querySelector('.setup');
 	var wizards;
+	var similarWizards;
 	var WIZARDS_NUMBER = 4;
 	
 	window.backend.load(onLoad, window.util.onError);
 	
-	
-	
 	function onLoad (data) {
-		console.log(data);
-		
-		//из data выбрать 4 волшебников и полученный массив записать в wizards
-		wizards = pickRandomAndUniqueFromArr(data, WIZARDS_NUMBER);
+		wizards = data;
 		console.log(wizards);
 		
+		//из wizards выбрать 4 волшебников и полученный массив записать в similarWizards
+		similarWizards = pickRandomAndUniqueFromArr(wizards, WIZARDS_NUMBER);
+		console.log(similarWizards);
 		
+		drawWizards();
+	}
+	
+	function drawWizards () {
 		var similarList = document.querySelector('.setup-similar-list');
+		similarList.innerHTML = "";
 		var wizardsTemplate = document.querySelector('#similar-wizard-template').content;
 
 		var fragment = document.createDocumentFragment();
 
-		for (var i = 0; i < wizards.length; i++) {
+		for (var i = 0; i < similarWizards.length; i++) {
 			var wizard = wizardsTemplate.cloneNode(true);
-			fragment.appendChild(createWizardElem(wizard, wizards[i]));
+			fragment.appendChild(createWizardElem(wizard, similarWizards[i]));
 		}
 
 		similarList.appendChild(fragment);
 
-		document.querySelector('.setup-similar').classList.remove('hidden');
+		if(document.querySelector('.setup-similar').classList.contains('hidden')) {
+			document.querySelector('.setup-similar').classList.remove('hidden');
+		}
+	}
+	
+	function getRank (wizard) {
+		
 	}
 
 	function pickRandomAndUniqueFromArr (arr, num) {

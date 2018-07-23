@@ -3,7 +3,7 @@
 (function () { 
 	var setup = document.querySelector('.setup');
 	var setupPlayer = setup.querySelector('.setup-player');
-	var wizards = window.util.wizards;
+	var coatColor, eyesColor;
 	
 	setupPlayer.addEventListener('click', onWizardClick);
 
@@ -14,26 +14,17 @@
 		var callback;
 
 		if(target.classList.contains('wizard-coat')) {
-//			var color = generateRandomParam("coatColors");
-//			console.log(color);
 			color = ['red', 'green', 'blue'];
 			callback = changeFill;
 		} else if (target.classList.contains('wizard-eyes')) {
-//			var color = generateRandomParam("eyesColors");
-//			console.log(color);
 			color = ['navy', 'teal', 'orange'];
 			callback = changeFill;
 		} else if (target.classList.contains('setup-fireball')) {
-//			var color = generateRandomParam("fireballsColors");
-//			console.log(color);
-//			target.parentNode.style.backgroundColor = color;
 			target = target.parentNode;
 			color = ['yellow', 'black', 'aliceblue'];
 			callback = changeBackground;
-//			return;
 		}
 
-//		target.style.fill = color;
 		colorizeElement(target, color, callback);
 	}
 	
@@ -53,12 +44,12 @@
 		callback(elem, color);
 	}
 
-	function generateRandomParam(prop) {
-		if(!wizards[prop]) return;
-
-	//  var item = pickRandomFromArr( wizards[prop] );
-		var item = window.util.pickRandomFromArr( wizards[prop] );
-
-		return item;
-	}
+//	function generateRandomParam(prop) {
+//		if(!wizards[prop]) return;
+//
+//	//  var item = pickRandomFromArr( wizards[prop] );
+//		var item = window.util.pickRandomFromArr( wizards[prop] );
+//
+//		return item;
+//	}
 })();
