@@ -4,7 +4,7 @@
 (function () { 
 	var setup = document.querySelector('.setup');
 	var wizards;
-	var similarWizards;
+//	var similarWizards;
 	var WIZARDS_NUMBER = 4;
 	
 	window.backend.load(onLoad, window.util.onError);
@@ -14,20 +14,23 @@
 		console.log(wizards);
 		
 		//из wizards выбрать 4 волшебников и полученный массив записать в similarWizards
-		similarWizards = pickRandomAndUniqueFromArr(wizards, WIZARDS_NUMBER);
-		console.log(similarWizards);
+//		similarWizards = pickRandomAndUniqueFromArr(wizards, WIZARDS_NUMBER);
+//		console.log(similarWizards);
 		
-		drawWizards();
+		updateWizards();
 	}
 	
-	function drawWizards () {
+	function drawWizards (similarWizards) {
+		console.log(wizards);
+		console.log(window.color);
+		
 		var similarList = document.querySelector('.setup-similar-list');
 		similarList.innerHTML = "";
 		var wizardsTemplate = document.querySelector('#similar-wizard-template').content;
 
 		var fragment = document.createDocumentFragment();
 
-		for (var i = 0; i < similarWizards.length; i++) {
+		for (var i = 0; i < WIZARDS_NUMBER; i++) {
 			var wizard = wizardsTemplate.cloneNode(true);
 			fragment.appendChild(createWizardElem(wizard, similarWizards[i]));
 		}
@@ -40,7 +43,34 @@
 	}
 	
 	function getRank (wizard) {
+		var rank = 0;
+		console.log(wizard.name);
 		
+		if(wizard.colorCoat === window.color.coat) {
+			rank += 2;
+		}
+		if(wizard.colorEyes === window.color.eyes) {
+			rank += 1;
+		}
+		
+		console.log(rank);
+		return rank;
+	}
+	
+	function updateWizards () {
+		drawWizards(wizards.sort(function(a, b) {
+			var rankDiff = getRank(b) - getRank(a);
+			if(rankDiff === 0) {
+				rankDiff = namesComparator(a.name, b.name);
+			}
+			
+			return rankDiff;
+		}));
+	}
+	
+	//для устойчивости массива, сравниваем по имени
+	function namesComparator (a, b) {
+		return (a > b) ? 1 : -1;
 	}
 
 	function pickRandomAndUniqueFromArr (arr, num) {
@@ -156,4 +186,8 @@
 		
 		return true;
 	}
+	
+	window.setup = {
+		updateWizards: updateWizards
+	};
 })();
