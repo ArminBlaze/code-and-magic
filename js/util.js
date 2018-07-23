@@ -2,13 +2,13 @@
 
 (function () { 
 	
-	var wizards = {
-			names: ['Иван', 'Хуан', 'Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'],
-			surnames: ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'],
-			coatColors: ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'],
-			eyesColors: ['black', 'red', 'blue', 'yellow', 'green'],
-			fireballsColors: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848']
-		};
+//	var wizards = {
+//			names: ['Иван', 'Хуан', 'Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'],
+//			surnames: ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'],
+//			coatColors: ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'],
+//			eyesColors: ['black', 'red', 'blue', 'yellow', 'green'],
+//			fireballsColors: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848']
+//		};
 	
 	function pickRandomFromArr (arr) {
 		return arr[Math.floor(Math.random() * arr.length)];
@@ -40,11 +40,33 @@
 		document.body.appendChild(errorDiv);
 	}
 	
+//	var timer;
+//	function debounce (func, delay) {
+//		window.clearTimeout(timer);
+//		timer = window.setTimeout(func, delay);
+//	}
+	
+	function debounce (f, ms) {
+			var timer;
+			
+			return function() {
+				if(timer) clearTimeout(timer);
+				
+				var self = this;
+				var args = [].slice.call(arguments);
+				
+				timer = setTimeout(function() {
+					f.apply(self, args);
+				}, ms, args);
+			};
+		}
+	
 	window.util = {
-		wizards: wizards,
+//		wizards: wizards,
 		//ф-ция выбора случайного значения из массива. Принимает массив в качестве параметра
 		pickRandomFromArr: pickRandomFromArr,
-		onError: onError
+		onError: onError,
+		debounce: debounce
 	};
 
 })();
