@@ -31,37 +31,35 @@
 	
 	setupPlayer.addEventListener('click', onWizardClick);
 
+	var updateWizardsWithDelay = window.util.debounce(window.setup.updateWizards, 500);
 	
 	function onWizardClick (e) {
 		var target = e.target;
-//		console.log(target);
 		var color, colors;
 
 		if(target.classList.contains('wizard-coat')) {
-//			colors = ['red', 'green', 'blue'];
 			color = window.util.pickRandomFromArr( COAT_COLORS );
 			coatColor = color;
 			changeFill(target, color);
 		} else if (target.classList.contains('wizard-eyes')) {
-//			colors = ['navy', 'teal', 'orange'];
 			color = window.util.pickRandomFromArr( EYES_COLORS );
 			eyesColor = color;
 			changeFill(target, color);
 		} else if (target.classList.contains('setup-fireball')) {
 			target = target.parentNode;
-//			colors = ['yellow', 'black', 'aliceblue'];
 			color = window.util.pickRandomFromArr( FIREBALL_COLORS );
 			
 			changeBackground(target, color);
 		}
 
-//		colorizeElement(target, color, callback);
 		updateWizardsWithDelay();
 	}
 	
-	function updateWizardsWithDelay () {
-		window.util.debounce(window.setup.updateWizards, 500);
-	}
+//	function updateWizardsWithDelay () {
+//		window.util.debounce(window.setup.updateWizards, 500);
+//	}
+	
+	
 	
 	function changeFill (elem, color) {
 		elem.style.fill = color;

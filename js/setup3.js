@@ -11,7 +11,6 @@
 	
 	function onLoad (data) {
 		wizards = data;
-		console.log(wizards);
 		
 		//из wizards выбрать 4 волшебников и полученный массив записать в similarWizards
 //		similarWizards = pickRandomAndUniqueFromArr(wizards, WIZARDS_NUMBER);
@@ -21,9 +20,6 @@
 	}
 	
 	function drawWizards (similarWizards) {
-		console.log(wizards);
-		console.log(window.color);
-		
 		var similarList = document.querySelector('.setup-similar-list');
 		similarList.innerHTML = "";
 		var wizardsTemplate = document.querySelector('#similar-wizard-template').content;
@@ -44,7 +40,6 @@
 	
 	function getRank (wizard) {
 		var rank = 0;
-		console.log(wizard.name);
 		
 		if(wizard.colorCoat === window.color.coat) {
 			rank += 2;
@@ -53,7 +48,6 @@
 			rank += 1;
 		}
 		
-		console.log(rank);
 		return rank;
 	}
 	
