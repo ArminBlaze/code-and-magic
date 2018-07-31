@@ -3,14 +3,22 @@
 ;(function () {
 	//05 - D'n'd
 	var setup = document.querySelector('.setup');
-	var popupIcon = setup.querySelector('.setup-user-pic');
+	var dialogHandler = setup.querySelector('.upload');
+	var popupIcon = dialogHandler.querySelector('.setup-user-pic');
 	
 	
+	var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+	var fileInput = dialogHandler.querySelector('input[type="file"]');
+	var openIcon = document.querySelector('.setup-open-icon');
 	
-	popupIcon.addEventListener('mousedown', onUserpicMousedown);
+	
+	dialogHandler.addEventListener('mousedown', onUserpicMousedown);
 	
 	function onUserpicMousedown (e) {
-		e.preventDefault();
+		var dragged = false;
+		
+		console.log(e.target);
+//		e.preventDefault();
 		var coords = getCoords(setup);
 		console.log(coords);
 		
@@ -21,9 +29,9 @@
 		
 //		 подготовить к перемещению
 //		 2. разместить на том же месте, но в абсолютных координатах
-		setup.style.position = 'absolute';
-		setup.style.transform = "none";
-		onMouseMove(e);
+//		setup.style.position = 'absolute';
+//		setup.style.transform = "none";
+//		onMouseMove(e);
 		
 //		 переместим в body, чтобы элемент был точно не внутри position:relative
 		document.body.appendChild(setup);
@@ -32,6 +40,9 @@
 		
 		
 		function onMouseMove(e) {
+			console.log("mouseMove");
+//			debugger;
+			dragged = true;
 			setup.style.left = e.pageX - shiftX + 'px';
 			setup.style.top = e.pageY - shiftY + 'px';
 		}
@@ -43,9 +54,21 @@
 		function onMouseUp () {
 			document.removeEventListener('mousemove', onMouseMove);
 			document.removeEventListener('mouseup', onMouseUp);
+			
+			if(dragged) {
+				console.log('dragged');
+				fileInput.addEventListener('click', onInputClick);
+				
+				function onInputClick (e) {
+					console.log('click cancel');
+					e.preventDefault();
+					fileInput.removeEventListener('click', onInputClick);
+					dragged = false;
+				}
+			}
 		}
 		
-		popupIcon.ondragstart = function() {
+		dialogHandler.ondragstart = function() {
 			return false;
 		};
 		
@@ -60,9 +83,7 @@
 	
 	
 	//09 - Images
-	var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-	var fileInput = setup.querySelector('input[type="file"]');
-	var openIcon = document.querySelector('.setup-open-icon');
+	
 	
 	fileInput.addEventListener('change', onFileChange);
 	
