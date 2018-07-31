@@ -17,15 +17,15 @@
 	function onUserpicMousedown (e) {
 		var dragged = false;
 		
-		console.log(e.target);
+//		console.log(e.target);
 //		e.preventDefault();
-		var coords = getCoords(setup);
-		console.log(coords);
-		
-		var shiftX = e.pageX - coords.left;
-		var shiftY = e.pageY - coords.top;
-		
-		console.log(shiftX, shiftY);
+//		var coords = getCoords(setup);
+//		console.log(coords);
+//		
+//		var shiftX = e.pageX - coords.left;
+//		var shiftY = e.pageY - coords.top;
+//		
+//		console.log(shiftX, shiftY);
 		
 //		 подготовить к перемещению
 //		 2. разместить на том же месте, но в абсолютных координатах
@@ -34,17 +34,44 @@
 //		onMouseMove(e);
 		
 //		 переместим в body, чтобы элемент был точно не внутри position:relative
-		document.body.appendChild(setup);
+//		document.body.appendChild(setup);
 		
-		setup.style.zIndex = 1000; // показывать над другими элементами
+//		setup.style.zIndex = 1000; // показывать над другими элементами
 		
+		var startCoords = { // Находим начальные координаты
+			x: e.clientX,
+			y: e.clientY
+		};
+		
+//		console.log(e.clientX, e.clientY);
 		
 		function onMouseMove(e) {
-			console.log("mouseMove");
+//			console.log("mouseMove");
+//			console.log(e.clientX, e.clientY);
+//			console.log(startCoords.x, startCoords.y);
+			
+			//фиксим баг Хрома с ложным mousemove
+			if(e.clientX == startCoords.x && e.clientY == startCoords.y) { 
+				console.log("same coords");
+				return;
+			}
 //			debugger;
 			dragged = true;
-			setup.style.left = e.pageX - shiftX + 'px';
-			setup.style.top = e.pageY - shiftY + 'px';
+//			setup.style.left = e.pageX - shiftX + 'px';
+//			setup.style.top = e.pageY - shiftY + 'px';
+			
+			var shift = { // Расстояние, на которое передвинулось окно
+        x: startCoords.x - e.clientX,
+        y: startCoords.y - e.clientY
+      };
+
+      startCoords = { // Новые начальные координаты после передвижения
+        x: e.clientX,
+        y: e.clientY
+      };
+
+      setup.style.top = (setup.offsetTop - shift.y) + 'px'; // Положение окна
+			setup.style.left = (setup.offsetLeft - shift.x) + 'px'; // после передвижения
 		}
 		
 		document.addEventListener('mousemove', onMouseMove);
