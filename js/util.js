@@ -1,7 +1,7 @@
 'use strict';
 
-(function () { 
-	
+(function () {
+
 //	var wizards = {
 //			names: ['Иван', 'Хуан', 'Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'],
 //			surnames: ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'],
@@ -9,21 +9,21 @@
 //			eyesColors: ['black', 'red', 'blue', 'yellow', 'green'],
 //			fireballsColors: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848']
 //		};
-	
-	function pickRandomFromArr (arr) {
-		return arr[Math.floor(Math.random() * arr.length)];
-	};
-	
-	function onError (message) {
-		console.error(message);
-			
-		var errorDiv = document.querySelector('.errorDiv');
 
-//		if(errorDiv) document.removeChild(errorDiv);
+  function pickRandomFromArr(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
 
-		if(!errorDiv) {
-			errorDiv = document.createElement('div');
-			errorDiv.style = '\
+  function onError(message) {
+    //    console.error(message);
+
+    var errorDiv = document.querySelector('.errorDiv');
+
+    //		if(errorDiv) document.removeChild(errorDiv);
+
+    if (!errorDiv) {
+      errorDiv = document.createElement('div');
+      errorDiv.style = '\
 				z-index: 100;\
 				margin: 0 auto;\
 				text-align: center;\
@@ -34,39 +34,41 @@
 				right: 0;\
 				font-size: 30px;\
 			';
-		}
-		
-		errorDiv.textContent = message;
-		document.body.appendChild(errorDiv);
-	}
-	
-//	var timer;
-//	function debounce (func, delay) {
-//		window.clearTimeout(timer);
-//		timer = window.setTimeout(func, delay);
-//	}
-	
-	function debounce (f, ms) {
-			var timer;
-			
-			return function() {
-				if(timer) clearTimeout(timer);
-				
-				var self = this;
-				var args = [].slice.call(arguments);
-				
-				timer = setTimeout(function() {
-					f.apply(self, args);
-				}, ms, args);
-			};
-		}
-	
-	window.util = {
-//		wizards: wizards,
-		//ф-ция выбора случайного значения из массива. Принимает массив в качестве параметра
-		pickRandomFromArr: pickRandomFromArr,
-		onError: onError,
-		debounce: debounce
-	};
+    }
+
+    errorDiv.textContent = message;
+    document.body.appendChild(errorDiv);
+  }
+
+  //	var timer;
+  //	function debounce (func, delay) {
+  //		window.clearTimeout(timer);
+  //		timer = window.setTimeout(func, delay);
+  //	}
+
+  function debounce(f, ms) {
+    var timer;
+
+    return function () {
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      var self = this;
+      var args = [].slice.call(arguments);
+
+      timer = setTimeout(function () {
+        f.apply(self, args);
+      }, ms, args);
+    };
+  }
+
+  window.util = {
+    //		wizards: wizards,
+    // ф-ция выбора случайного значения из массива. Принимает массив в качестве параметра
+    pickRandomFromArr: pickRandomFromArr,
+    onError: onError,
+    debounce: debounce
+  };
 
 })();
